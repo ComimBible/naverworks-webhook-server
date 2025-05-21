@@ -20,6 +20,10 @@ app.post("/naverworks-webhook", async (req, res) => {
 
   console.log(`📩 메시지: ${message}`);
   console.log(`👤 보낸 사람: ${userId}`);
+  console.log("🧪 timestamp:", timestamp);
+  console.log("📆 sendTime:", sendTime);
+  console.log("🇰🇷 kstDate:", kstDate);
+  console.log("📝 createdTime (ISO):", createdTime);
 
   // Notion 전송
   await sendToNotion(message, userId, createdTime);
