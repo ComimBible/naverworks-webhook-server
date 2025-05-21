@@ -13,17 +13,20 @@ app.post("/naverworks-webhook", async (req, res) => {
   // 예시: 메시지 내용 추출
   const message = data.content?.text || "(빈 메시지)";
   const userId = data.source?.userId || "(알 수 없음)";
+  const timestamp = req.body.createdTime;
+  const sendTime = new Date(timestamp).toISOString();
+  const kstDate = new Date(sendTime.getTime() + 9 * 60 * 60 * 1000);
 
   console.log(`📩 메시지: ${message}`);
   console.log(`👤 보낸 사람: ${userId}`);
 
   // Notion 전송
-  await sendToNotion(message, userId);
+  await sendToNotion(message, userId, kstDate);
 
   res.status(200).send("Received");
 });
 
-const sendToNotion = async (text, sender) => {
+const sendToNotion = async (text, sender, createdTime) => {
   const notionDatabaseId = "1fa14209aa6f80a0aac2c839326bccae";
   const notionApiKey = "ntn_w54028970077wNs7t8Xomjsc6GXtyIv5RGdy2xgKiVNaPn";
 
@@ -44,6 +47,11 @@ const sendToNotion = async (text, sender) => {
                 },
               },
             ],
+          },
+          CreatedTime: {
+            date: {
+              start: createdTime,
+            },
           },
         },
       },
