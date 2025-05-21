@@ -23,7 +23,7 @@ app.post("/naverworks-webhook", async (req, res) => {
   res.status(200).send("Received");
 });
 
-const sendToNotion = async (text) => {
+const sendToNotion = async (text, sender) => {
   const notionDatabaseId = "1fa14209aa6f80a0aac2c839326bccae";
   const notionApiKey = "ntn_w54028970077wNs7t8Xomjsc6GXtyIv5RGdy2xgKiVNaPn";
 
