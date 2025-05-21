@@ -14,16 +14,16 @@ app.post("/naverworks-webhook", async (req, res) => {
   const message = data.content?.text || "(빈 메시지)";
   const userId = data.source?.userId || "(알 수 없음)";
   const timestamp = req.body.createdTime;
+  console.log("🧪 timestamp:", timestamp);
   const sendTime = new Date(timestamp);
+  console.log("📆 sendTime:", sendTime);
   const kstDate = new Date(sendTime.getTime() + 9 * 60 * 60 * 1000);
+  console.log("🇰🇷 kstDate:", kstDate);
   const createdTime = kstDate.toISOString();
+  console.log("📝 createdTime (ISO):", createdTime);
 
   console.log(`📩 메시지: ${message}`);
   console.log(`👤 보낸 사람: ${userId}`);
-  console.log("🧪 timestamp:", timestamp);
-  console.log("📆 sendTime:", sendTime);
-  console.log("🇰🇷 kstDate:", kstDate);
-  console.log("📝 createdTime (ISO):", createdTime);
 
   // Notion 전송
   await sendToNotion(message, userId, createdTime);
